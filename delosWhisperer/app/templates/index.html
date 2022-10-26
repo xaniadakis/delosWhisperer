@@ -1,0 +1,26 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<link rel="stylesheet" href="{% static 'index.css' %}">
+<script src="{% static 'first.js' %}"></script>
+<body>
+<h1>Courses</h1>
+
+<table class="center">
+    <tr>
+<!--        <th>Course ID</th>-->
+        <th>Course Name</th>
+<!--        <th>RID</th>-->
+    </tr>
+    {% for x in mycourses %}
+    <tr>
+<!--        <td>{{ x.fid }}</td>-->
+        <td>
+            <button onclick="downloadCourseByRid('{{x.code}}', '{{ x.name }}')" id="button" type="button">{{ x.name }}</button>
+        </td>
+<!--        <td>{{ x.code }}</td>-->
+    </tr>
+    {% endfor %}
+</table>
+</body>
+</html>
