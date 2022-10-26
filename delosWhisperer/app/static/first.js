@@ -10,6 +10,7 @@ function downloadCourseByRid(rid, name) {
         name: name
     }).toString()
     const myRequest = new Request("http://localhost:8000/downloadCourse?" + params);
+
     fetch(myRequest, options)
         .then((response) => {
             console.log(response)

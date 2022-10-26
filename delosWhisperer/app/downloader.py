@@ -57,8 +57,8 @@ class DelosDownloader():
         self.inputIds = set()
         self.cookie = None
         self.getValidCookie()
-        self.downloadCourseByRid(courseRid, courseName)
         self.nLectures = 0
+        self.downloadCourseByRid(courseRid, courseName)
         self.response = None
         self.statusCode = None
         if not self.errors:
