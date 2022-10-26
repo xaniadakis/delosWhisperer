@@ -57,8 +57,8 @@ class DelosDownloader():
         self.inputIds = set()
         self.cookie = None
         self.getValidCookie()
-        self.downloadCourseByRid(courseRid, courseName)
         self.nLectures = 0
+        self.downloadCourseByRid(courseRid, courseName)
         self.response = None
         self.statusCode = None
         if not self.errors:
@@ -218,7 +218,7 @@ class DelosDownloader():
                     self.nLectures += 1
                 except Exception as e:
                     logger.info(
-                        Colors.FAIL + "Exception " + e.__class__ +
+                        Colors.FAIL + "Exception " + str(e.__class__) +
                         " occured while downloading " + filename + ".\n" + Colors.RESET)
                     if os.path.exists(completeFilename):
                         os.remove(completeFilename)

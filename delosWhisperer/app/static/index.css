@@ -27,7 +27,7 @@ table, th, td {
     border-spacing: 0px;
 }
 
-h1{
+h1, a {
     alignment: center;
     text-align: center;
     margin-left: auto;
