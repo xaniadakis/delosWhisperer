@@ -1,2 +1,0 @@
-martor
-gunicorn

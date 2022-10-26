@@ -27,10 +27,18 @@ table, th, td {
     border-spacing: 0px;
 }
 
+h1{
+    alignment: center;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .center {
-    width: 70%;
-    margin-left: 50%;
-    margin-right: 50%;
+    alignment: center;
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 tr:nth-child(even) {

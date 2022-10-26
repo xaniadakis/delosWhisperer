@@ -1,0 +1,9 @@
+gunicorn
+django
+djangorestframework
+requests
+progressbar
+django-extensions
+Werkzeug
+pyOpenSSL
+django-cors-headers

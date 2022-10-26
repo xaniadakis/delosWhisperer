@@ -63,7 +63,8 @@ class DelosDownloader():
         self.statusCode = None
         if not self.errors:
             logger.info(Colors.GREEN + "No errors occured while downloading. Operation was successful." + Colors.RESET)
-            self.response = "Successfuly downloaded " + str(self.nLectures) + " lectures of the: " + courseName + " courses."
+            self.response = "Successfuly downloaded " + str(
+                self.nLectures) + " lectures of the: " + courseName + " courses."
             self.statusCode = status.HTTP_200_OK
         else:
             logger.info(Colors.FAIL + "Errors occured while downloading the following files: \n")
@@ -72,7 +73,6 @@ class DelosDownloader():
                 logger.info(error)
                 self.response += error + ", "
             self.statusCode = status.HTTP_500_INTERNAL_SERVER_ERROR
-
 
     def getValidCookie(self):
         headers = {
@@ -85,7 +85,8 @@ class DelosDownloader():
             'Sec-Fetch-User': '?1',
             'Sec-GPC': '1',
             'Upgrade-Insecure-Requests': '1',
-            'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36',
+            'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36' +
+                          ' (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36',
         }
         params = {
             'dp': 'di'
@@ -93,7 +94,6 @@ class DelosDownloader():
         response = requests.get('https://delos.uoa.gr/opendelos/search', params=params, headers=headers)
         self.cookie = find_between(response.headers.get('Set-Cookie'), "JSESSIONID=", ";")
         logger.info(self.cookie)
-
 
     def chooseCoursesToDownload(self):
         cookies = {
@@ -108,7 +108,8 @@ class DelosDownloader():
             'Sec-Fetch-Mode': 'cors',
             'Sec-Fetch-Site': 'same-origin',
             'Sec-GPC': '1',
-            'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36',
+            'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36' +
+                          ' (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36',
             'X-Requested-With': 'XMLHttpRequest',
         }
 
@@ -131,7 +132,8 @@ class DelosDownloader():
 
         for courseId, courseName in self.courseIds.items():
             logger.info(
-                Colors.BOLD + "courseId: " + Colors.RESET + courseId + Colors.BOLD + "  Course: " + Colors.RESET + courseName + Colors.BOLD + " RID: " + Colors.RESET +
+                Colors.BOLD + "courseId: " + Colors.RESET + courseId + Colors.BOLD +
+                "  Course: " + Colors.RESET + courseName + Colors.BOLD + " RID: " + Colors.RESET +
                 self.courses[courseName])
 
         logger.info("Please type the id(s) of the course(s) you are interested to download.")
@@ -146,10 +148,10 @@ class DelosDownloader():
             logger.info(inputId + " : " + self.courseIds[inputId])
         logger.info("\n")
 
-
     def downloadCourseByRid(self, courseRid, courseName):
         logger.info(
-            Colors.BLUE + "Attempting to download lectures from " + Colors.BLUE + courseName + Colors.RESET + Colors.BLUE + " course. (" + courseRid + ")" + Colors.RESET)
+            Colors.BLUE + "Attempting to download lectures from " + Colors.BLUE +
+            courseName + Colors.RESET + Colors.BLUE + " course. (" + courseRid + ")" + Colors.RESET)
 
         cookies = {
             'JSESSIONID': self.cookie,
@@ -165,7 +167,8 @@ class DelosDownloader():
             'Sec-Fetch-User': '?1',
             'Sec-GPC': '1',
             'Upgrade-Insecure-Requests': '1',
-            'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36',
+            'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36' +
+                          ' (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36',
         }
         params = {
             'dp': 'di',
@@ -190,30 +193,33 @@ class DelosDownloader():
                     filename] = "https://delos-media.uoa.gr:443/delosrc/resources/vl/" + lectureRid + "/" + lectureRid + ".mp4"
             i += 1
 
-        lines = filtered.splitlines()
-
         logger.info("Will download the following lectures:")
         for x in links.keys():
             logger.info(x)
 
         path = self.dir + parentDirectory
-        if not os.path.isdir(path):
-            os.mkdir(path)
-            logger.info(Colors.WARNING + "Directory " + path + " was created" + Colors.RESET)
+        if not os.path.exists(path):
+            try:
+                os.mkdir(path)
+                logger.info(Colors.WARNING + "Directory " + path + " was created" + Colors.RESET)
+            except:
+                path = self.dir
 
         for filename, url in links.items():
             completeFilename = path + filename
             if not os.path.exists(completeFilename):
                 try:
                     logger.info(
-                        Colors.WARNING + "Attempting to download from: " + Colors.BLUE + url + Colors.WARNING + " into: " + Colors.BLUE + completeFilename + Colors.RESET)
+                        Colors.WARNING + "Attempting to download from: " + Colors.BLUE + url +
+                        Colors.WARNING + " into: " + Colors.BLUE + completeFilename + Colors.RESET)
                     local_filename, headers = urllib.request.urlretrieve(url, completeFilename,
                                                                          DelosDownloaderProgressBar())
                     logger.info(Colors.GREEN + "Successfully downloaded " + filename + Colors.RESET + "\n")
                     self.nLectures += 1
                 except Exception as e:
                     logger.info(
-                        Colors.FAIL + "Exception " + e.__class__ + " occured while downloading " + filename + ".\n" + Colors.RESET)
+                        Colors.FAIL + "Exception " + e.__class__ +
+                        " occured while downloading " + filename + ".\n" + Colors.RESET)
                     if os.path.exists(completeFilename):
                         os.remove(completeFilename)
                     self.errors.append(filename)

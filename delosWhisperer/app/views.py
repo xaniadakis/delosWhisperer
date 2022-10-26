@@ -4,7 +4,6 @@ from app.models import Courses
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .downloader import DelosDownloader
-from rest_framework import status
 import logging
 
 logger = logging.getLogger('django')
@@ -26,4 +25,6 @@ class ApiView(APIView):
         rid = request.GET.get('rid')
         name = request.GET.get('name')
         dd = DelosDownloader(rid, name)
+        # headers = {'Access-Control-Allow-Origin':lo 'http://0.0.0.0:8020'}
         return Response(dd.response, status=dd.statusCode)
+                        # , headers=headers)

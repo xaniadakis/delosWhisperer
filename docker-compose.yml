@@ -1,0 +1,13 @@
+version: "3.8"
+
+services:
+  delos-whisperer:
+    build: .
+    volumes:
+      - ~/Videos:/root/Videos:Z
+    ports:
+      - "8000:8000"
+    environment:
+      - DJANGO_SUPERUSER_USERNAME=root
+      - DJANGO_SUPERUSER_PASSWORD=toor
+      - DJANGO_SUPERUSER_EMAIL=root@root.gr

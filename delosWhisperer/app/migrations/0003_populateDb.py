@@ -1,4 +1,4 @@
-from django.db import migrations, models
+from django.db import migrations
 import requests
 from app.models import Courses
 
@@ -34,6 +34,7 @@ def getValidCookie():
 
 
 def persistCourses():
+
     cookies = {
         'JSESSIONID': getValidCookie(),
     }
@@ -41,7 +42,7 @@ def persistCourses():
         'Accept': 'text/html, */*; q=0.01',
         'Accept-Language': 'en-US,en;q=0.8',
         'Connection': 'keep-alive',
-        'Referer': 'https://delos.uoa.gr/opendelos/search?dp=di',
+        'Referer': 'https://delos.uoa.gr/opendelos/search?dp=di&ay=2022',
         'Sec-Fetch-Dest': 'empty',
         'Sec-Fetch-Mode': 'cors',
         'Sec-Fetch-Site': 'same-origin',
